@@ -36,6 +36,13 @@ def draw_cross(scr, pos, radius):
     pygame.draw.line(scr, (255, 0, 0), (pos[0], pos[1] - radius - 2), (pos[0], pos[1] + radius + 2), 1)
 
 
+def draw_circles(scr, circles, height, v, fps, radius):
+    for circle in circles:
+        if circle[1] < height - circle_radius:
+            circle[1] += int(v / fps)
+        pygame.draw.circle(scr, circle[2], (circle[0], circle[1]), radius)
+
+
 while running:
     main_screen.fill((0, 0, 0))
     # внутри игрового цикл еще один цикл
@@ -58,14 +65,10 @@ while running:
     circles_screen.fill((0, 0, 0))
     circles_screen.blit(background, (0, 0))
 
-    for circle in circles:
-        if circle[1] < height - circle_radius:
-            circle[1] += int(v / fps)
-        pygame.draw.circle(circles_screen, circle[2], (circle[0], circle[1]), circle_radius)
+    draw_circles(circles_screen, circles, height, v, fps, circle_radius)
     main_screen.blit(circles_screen, (0, 0))
 
     draw_cross(main_screen, mouse_pos, circle_radius)
-    # pygame.draw.circle(main_screen, (255, 0, 0), mouse_pos, 2)
 
     clock.tick(fps)
 
