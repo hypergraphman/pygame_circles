@@ -56,7 +56,13 @@ while running:
             r = random.randint(0, 255)
             g = random.randint(0, 255)
             b = random.randint(0, 255)
-            circles.append([x, y, (r, g, b)])
+
+            # Только яркие цвета
+            color = pygame.Color(r, g, b)
+            hsv = color.hsva
+            color.hsva = (hsv[0], hsv[1], 100, hsv[3])
+
+            circles.append([x, y, color])
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
 
